@@ -1,0 +1,8 @@
+{
+  "extends": "react-app",
+  "globals": {
+  },
+  "rules": {
+    "indent": ["warn", 2]
+  }
+}
