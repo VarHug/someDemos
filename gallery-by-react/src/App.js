@@ -1,20 +1,16 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
-import './App.css';
+import imageData from './data/imagesData.json';
 
 class App extends Component {
   render() {
+    console.log(imageData);
     return (
-      // <div className="App">
-      //   <header className="App-header">
-      //     <img src={logo} className="App-logo" alt="logo" />
-      //     <h1 className="App-title">Welcome to React</h1>
-      //   </header>
-      //   <p className="App-intro">
-      //     To get started, edit <code>src/App.js</code> and save to reload.
-      //   </p>
-      // </div>
-      <h1>Hello World</h1>
+      <div className = 'stage'>
+        <div className = 'img-sec'>
+        </div>
+        <div className = 'controller-nav'>
+        </div>
+      </div>
     );
   }
 }
