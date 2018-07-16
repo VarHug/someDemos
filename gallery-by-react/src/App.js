@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import imageDatas from './data/imagesData.json'; 
+import imageDatas from './data/imagesData.json';
 import ReactDom from 'react-dom';
 import ImgFigure from './components/ImgFigure';
 
@@ -23,6 +23,13 @@ getImgUrl(imageDatas)
  */
 function getRangeRandom(low, high) {
   return Math.ceil(Math.random() * (high - low) + low);
+}
+
+/**
+ * 获取0-30°之间的一个任意正负角度
+ */
+function get30DegRandom() {
+  return (Math.random() >= 0.5 ? '' : '-') + Math.ceil(Math.random() * 30);
 }
 
 class App extends Component {
@@ -93,9 +100,10 @@ class App extends Component {
     for (let i = 0, len = imageDatas.length; i < len; i++) {
       imgsArrangeArr[i] = {
         pos: {
-          left: '0',
-          top: '0'
-        }
+          left: 0,
+          top: 0
+        },
+        rotate: 0
       }
     }
 
@@ -126,6 +134,7 @@ class App extends Component {
 
     // 布局中心图片
     imgsArrangeCenterArr[0].pos = centerPos;
+    imgsArrangeCenterArr[0].rotate = 0;
 
     // 取出要布局的上侧的图片的状态信息
     topImgSpliceIndex = Math.ceil(Math.random() * (imgsArrangeArr.length - topImgNum));
@@ -137,6 +146,7 @@ class App extends Component {
         top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
         left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
       }
+      val.rotate = get30DegRandom();
     });
 
     // 布局左右两侧的图片
@@ -153,6 +163,7 @@ class App extends Component {
         top: getRangeRandom(hPosRangeY[0], hPosRangeY[1]),
         left: getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1])
       }
+      imgsArrangeArr[i].rotate = get30DegRandom();
     }
 
     if (imgsArrangeTopArr && imgsArrangeTopArr[0]) {
