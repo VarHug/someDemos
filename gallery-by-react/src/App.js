@@ -47,15 +47,59 @@ class App extends Component {
       }
     };
     this.state = {
-      imgsArrangeArr: [
-        // {
-        //   pos: {
-        //     left: '0',
-        //     top: '0'
-        //   }
-        // }
-      ]
+      imgsArrangeArr: this.initState()
     }
+  }
+
+  /**
+   * 初始化图片组件状态数组
+   * @memberof App
+   */
+  initState() {
+    let imgsArrangeArr = [];
+    // 舞台相关数据
+    let stageWidth = window.innerWidth,
+      stageHeight = window.innerHeight,
+      halfStageWidth = Math.ceil(stageWidth / 2),
+      halfStageHeight = Math.ceil(stageHeight / 2);
+    
+    // imgFigure元素的相关数据
+    let imgFigureWidth = 280,
+      imgFigureHeight = 420,
+      halfImgFigureWidth = Math.ceil(imgFigureWidth / 2),
+      halfImgFigureHeight = Math.ceil(imgFigureHeight / 2);
+    
+    this.Constant.centerPos = {
+      left: halfStageWidth - halfImgFigureWidth,
+      top: halfStageHeight - halfImgFigureHeight
+    }
+
+    this.Constant.hPosRange.leftSecX[0] = 0 - halfImgFigureWidth;
+    this.Constant.hPosRange.leftSecX[1] = halfStageWidth - halfImgFigureWidth * 3;
+    this.Constant.hPosRange.rightSecX[0] = halfStageWidth + halfImgFigureWidth;
+    this.Constant.hPosRange.rightSecX[1] = stageWidth - halfImgFigureWidth;
+    this.Constant.hPosRange.y[0] = 0 - halfImgFigureHeight;
+    this.Constant.hPosRange.y[1] = stageHeight - halfImgFigureHeight;
+
+    this.Constant.vPosRange.x[0] = halfStageWidth - imgFigureWidth;
+    this.Constant.vPosRange.x[1] = halfStageWidth;
+    this.Constant.vPosRange.topY[0] = 0 - halfImgFigureHeight;
+    this.Constant.vPosRange.topY[1] = halfStageHeight - halfImgFigureHeight * 3;
+    // debug:图片高度过高或者舞台区域过小，导致最低值大于最高值(均为负)
+    if (this.Constant.vPosRange.topY[0] > this.Constant.vPosRange.topY[1]) {
+      this.Constant.vPosRange.topY[0] = this.Constant.vPosRange.topY[1] - 40;
+    }
+
+    for (let i = 0, len = imageDatas.length; i < len; i++) {
+      imgsArrangeArr[i] = {
+        pos: {
+          left: '0',
+          top: '0'
+        }
+      }
+    }
+
+    return imgsArrangeArr;
   }
 
   /**
@@ -122,57 +166,9 @@ class App extends Component {
     });
   }
 
-  // 图片组件挂载
-  componentDidMount() {
-    // 舞台stage元素的相关数据
-    let stageDom = ReactDom.findDOMNode(this.refs.stage),
-      stageWidth = stageDom.scrollWidth,
-      stageHeight = stageDom.scrollHeight,
-      halfStageWidth = Math.ceil(stageWidth / 2),
-      halfStageHeight = Math.ceil(stageHeight / 2);
-    
-    // imgFigure元素的相关数据
-    let imgFigureDom = ReactDom.findDOMNode(this.refs.imgFigure0),
-      imgFigureWidth = imgFigureDom.scrollWidth,
-      imgFigureHeight = imgFigureDom.scrollHeight,
-      halfImgFigureWidth = Math.ceil(imgFigureWidth / 2),
-      halfImgFigureHeight = Math.ceil(imgFigureHeight / 2);
-    
-    this.Constant.centerPos = {
-      left: halfStageWidth - halfImgFigureWidth,
-      top: halfStageHeight - halfImgFigureHeight
-    }
-
-    this.Constant.hPosRange.leftSecX[0] = 0 - halfImgFigureWidth;
-    this.Constant.hPosRange.leftSecX[1] = halfStageWidth - halfImgFigureWidth * 3;
-    this.Constant.hPosRange.rightSecX[0] = halfStageWidth + halfImgFigureWidth;
-    this.Constant.hPosRange.rightSecX[1] = stageWidth - halfImgFigureWidth;
-    this.Constant.hPosRange.y[0] = 0 - halfImgFigureHeight;
-    this.Constant.hPosRange.y[1] = stageHeight - halfImgFigureHeight;
-
-    this.Constant.vPosRange.x[0] = halfStageWidth - imgFigureWidth;
-    this.Constant.vPosRange.x[1] = halfStageWidth;
-    this.Constant.vPosRange.topY[0] = 0 - halfImgFigureHeight;
-    this.Constant.vPosRange.topY[1] = halfStageHeight - halfImgFigureHeight * 3;
-    // debug:图片高度过高或者舞台区域过小，导致最低值大于最高值(均为负)
-    if (this.Constant.vPosRange.topY[0] > this.Constant.vPosRange.topY[1]) {
-      this.Constant.vPosRange.topY[0] = this.Constant.vPosRange.topY[1] - 40;
-    }
-
-    let imgsArrangeArr = this.state.imgsArrangeArr;
-    for (let i = 0, len = imageDatas.length; i < len; i++) {
-      if (!this.state.imgsArrangeArr[i]) {
-        imgsArrangeArr[i] = {
-          pos: {
-            left: '0',
-            top: '0'
-          }
-        }
-      }
-    }
-    this.setState({
-      imgsArrangeArr: imgsArrangeArr
-    }, this.rearrange(0));
+  // 舞台组件挂载前
+  componentWillMount() {
+    this.rearrange(0);
   }
 
   render() {
@@ -194,6 +190,11 @@ class App extends Component {
         </div>
       </div>
     );
+  }
+
+  // 舞台组件挂载后
+  componentDidMount() {
+
   }
 }
 
