@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import imageDatas from './data/imagesData.json';
-import ReactDom from 'react-dom';
+// import ReactDom from 'react-dom';
 import ImgFigure from './components/ImgFigure';
 
 /**
@@ -103,11 +103,24 @@ class App extends Component {
           left: 0,
           top: 0
         },
-        rotate: 0
+        rotate: 0,
+        isInverse: false,   // 图片正反面
+        isCenter: false
       }
     }
 
     return imgsArrangeArr;
+  }
+
+  inverse(index) {
+    return function() {
+      let imgsArrangeArr = this.state.imgsArrangeArr;
+      imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;
+
+      this.setState({
+        imgsArrangeArr: imgsArrangeArr
+      });
+    }.bind(this);
   }
 
   /**
@@ -133,8 +146,11 @@ class App extends Component {
     let imgsArrangeCenterArr = imgsArrangeArr.splice(centerIndex, 1); // 中心图片
 
     // 布局中心图片
-    imgsArrangeCenterArr[0].pos = centerPos;
-    imgsArrangeCenterArr[0].rotate = 0;
+    imgsArrangeCenterArr[0] = {
+      pos: centerPos,
+      rotate: 0,
+      isCenter: true
+    }
 
     // 取出要布局的上侧的图片的状态信息
     topImgSpliceIndex = Math.ceil(Math.random() * (imgsArrangeArr.length - topImgNum));
@@ -147,6 +163,7 @@ class App extends Component {
         left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
       }
       val.rotate = get30DegRandom();
+      val.isCenter = false;
     });
 
     // 布局左右两侧的图片
@@ -164,6 +181,7 @@ class App extends Component {
         left: getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1])
       }
       imgsArrangeArr[i].rotate = get30DegRandom();
+      imgsArrangeArr[i].isCenter = false;
     }
 
     if (imgsArrangeTopArr && imgsArrangeTopArr[0]) {
@@ -177,6 +195,12 @@ class App extends Component {
     });
   }
 
+  center(index) {
+    return function () {
+      this.rearrange(index);
+    }.bind(this);
+  }
+
   // 舞台组件挂载前
   componentWillMount() {
     this.rearrange(0);
@@ -187,7 +211,7 @@ class App extends Component {
       imgFigures = [];
 
     imageDatas.forEach((val, index) => {
-      imgFigures.push(<ImgFigure data = {val} key={index} arrange={this.state.imgsArrangeArr[index]} ref={'imgFigure' + index} />); // 当 ref 属性被用于一个自定义类组件时，ref 对象将接收该组件已挂载的实例作为它的 current
+      imgFigures.push(<ImgFigure ref={'imgFigure' + index} data = {val} key={index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)} />); // 当 ref 属性被用于一个自定义类组件时，ref 对象将接收该组件已挂载的实例作为它的 current
     });
 
     return (
