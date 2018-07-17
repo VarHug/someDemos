@@ -44,11 +44,11 @@ class ImgFigure extends Component {
 
     return (
       <div className={imgFigureClassName} style={styleObj} onClick={this.handleClick}>
-        <div className='img img-front'>
+        <div className='img-front'>
           <div className='img-wrapper'>
             <img width='200' height='300' src={this.props.data.imgUrl} alt={this.props.data.title}/>
           </div>
-          <h2 className='img img-title'>{this.props.data.title}</h2>
+          <h2 className='img-title'>{this.props.data.title}</h2>
         </div>
         <div className='img-back'>
           <p>{this.props.data.desc}</p>
