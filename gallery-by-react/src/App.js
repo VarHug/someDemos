@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import imageDatas from './data/imagesData.json';
 // import ReactDom from 'react-dom';
 import ImgFigure from './components/ImgFigure';
+import ControllerUnit from './components/ControllerUnit';
 
 /**
  * 为数据数组中增加url地址属性
@@ -212,6 +213,8 @@ class App extends Component {
 
     imageDatas.forEach((val, index) => {
       imgFigures.push(<ImgFigure ref={'imgFigure' + index} data = {val} key={index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)} />); // 当 ref 属性被用于一个自定义类组件时，ref 对象将接收该组件已挂载的实例作为它的 current
+
+      controllerUnits.push(<ControllerUnit key={index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)} />);
     });
 
     return (

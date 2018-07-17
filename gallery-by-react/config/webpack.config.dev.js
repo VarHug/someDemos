@@ -177,9 +177,9 @@ module.exports = {
                     require('postcss-flexbugs-fixes'),
                     autoprefixer({
                       browsers: [
-                        '>1%',
-                        'last 4 versions',
-                        'Firefox ESR',
+                        '>1%',  // 全球超过1%的人所使用的浏览器
+                        'last 4 versions',  // 根据CanIUse.com追踪的最后4个版本的所有浏览器
+                        'Firefox ESR',  // 最新的Firefox版本
                         'not ie < 9', // React doesn't support IE8 anyway
                       ],
                       flexbox: 'no-2009',

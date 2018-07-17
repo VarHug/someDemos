@@ -48,13 +48,34 @@ html, body
           font-weight 700
           color #a7a0a2
       .img-back
-        transform rotateY(180deg)
+        transform rotateY(180deg) translateZ(1px)
         font-size 20px
         color #666
-  .controller-nav
-    position absolute
-    left 0
-    bottom 30px
-    width 100%
+.controller-nav
+  position absolute
+  left 0
+  bottom 30px
+  width 100%
+  text-align center
+  z-index 100
+  .controller-unit
+    display inline-block
+    margin 0 5px
+    width 30px
+    height 30px
+    font-size 15px
     text-align center
-    z-index 100
+    vertical-align middle
+    cursor pointer
+    color #fff
+    background #aaa
+    border-radius 50%
+    transform scale(.5)
+    transition transform .6s ease-in-out, background .3s
+    &.is-center
+      line-height 30px
+      background #888
+      transform scale(1)
+      &.is-inverse
+        background #555
+        transform rotateY(180deg)
