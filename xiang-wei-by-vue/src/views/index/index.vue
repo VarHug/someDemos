@@ -67,17 +67,35 @@
       <div class="desc">同心 同力 共赢未来</div>
       <ul class="partner-list">
         <div class="partner-list-top">
-          <li class="partner-list-item"></li>
-          <li class="partner-list-item"></li>
-          <li class="partner-list-item"></li>
-          <li class="partner-list-item"></li>
-          <li class="partner-list-item"></li>
+          <li class="partner-list-item">
+            <div class="list-item-name">伙伴名字</div>
+          </li>
+          <li class="partner-list-item">
+            <div class="list-item-name">伙伴名字</div>
+          </li>
+          <li class="partner-list-item">
+            <div class="list-item-name">伙伴名字</div>
+          </li>
+          <li class="partner-list-item">
+            <div class="list-item-name">伙伴名字</div>
+          </li>
+          <li class="partner-list-item">
+            <div class="list-item-name">伙伴名字</div>
+          </li>
         </div>
         <div class="partner-list-bottom">
-          <li class="partner-list-item"></li>
-          <li class="partner-list-item"></li>
-          <li class="partner-list-item"></li>
-          <li class="partner-list-item"></li>
+          <li class="partner-list-item">
+            <div class="list-item-name">伙伴名字</div>
+          </li>
+          <li class="partner-list-item">
+            <div class="list-item-name">伙伴名字</div>
+          </li>
+          <li class="partner-list-item">
+            <div class="list-item-name">伙伴名字</div>
+          </li>
+          <li class="partner-list-item">
+            <div class="list-item-name">伙伴名字</div>
+          </li>
         </div>
       </ul>
     </div>
@@ -317,6 +335,19 @@ export default {
       box-sizing border-box
       background url('../../common/images/brand_all.png') no-repeat
       cursor pointer
+      .list-item-name
+        width 196px
+        height 196px
+        line-height 196px
+        text-align center
+        font-size $font-size-medium
+        color $color-text-white
+        background url('../../common/images/brand_all.png') no-repeat -196px -784px
+        opacity 0
+        transition all 1s
+      &:hover
+        .list-item-name
+          opacity 1
     /.partner-list-top .partner-list-item
       &:nth-child(1)
         background-position 0 0

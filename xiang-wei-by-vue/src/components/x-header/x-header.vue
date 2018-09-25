@@ -35,14 +35,12 @@ export default {
 @import "~@/common/stylus/variable"
 
 .x-header
-  min-width 1450px
   height 80px
   background $color-info
   .logo
     padding 8px 0 0 200px
   .nav
     line-height 80px
-    min-width 600px
     height 80px
     .nav-list
       font-size 0
