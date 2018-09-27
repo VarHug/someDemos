@@ -37,10 +37,14 @@ export default {
   },
   methods: {
     gotop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      try {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      } catch (e) {
+        window.scrollTo(0, 0);
+      }
     },
     _handleScroll() {
       this.scrollY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;

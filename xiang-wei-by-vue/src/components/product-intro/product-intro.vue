@@ -2,12 +2,18 @@
   <div class="product-intro">
     <x-title :title="title" :subtitle="subtitle" :desc="desc"></x-title>
     <div class="show-content">
-      <i class="icon el-icon-arrow-left" @click="prev"></i>
-      <div class="stage">
-        <img :src="getImageUrl">
-        <div class="desc">这是一个产品介绍信息</div>
-      </div>
-      <i class="icon el-icon-arrow-right" @click="next"></i>
+      <el-carousel class="stage"
+                  indicator-position="none"
+                  arrow="always"
+                  @change="carouselChange"
+                  ref="carousel">
+        <el-carousel-item v-for="(item, index) in productImage" :key="index">
+          <div class="img-wrapper">
+            <img width="100%" height="100%" :src="item.url">
+          </div>
+          <div class="desc">这是一个产品介绍信息</div>
+        </el-carousel-item>
+      </el-carousel>
     </div>
     <div class="product">
       <div class="title">
@@ -16,7 +22,7 @@
         <div class="line"></div>
       </div>
       <ul class="product-list">
-        <li class="product-list-item" :class="{'current': index === currentIndex - 1}" v-for="(item, index) in productImage" :key="index">
+        <li class="product-list-item" :class="{'current': index === currentIndex}" v-for="(item, index) in productImage" :key="index">
           <img width="100%" height="100%" :src="item.url" @click="selectProduct(index)">
         </li>
       </ul>
@@ -37,27 +43,15 @@ export default {
       currentIndex: 1
     };
   },
-  computed: {
-    getImageUrl() {
-      return require(`../../common/images/pro_${this.currentIndex}.jpg`);
-    }
-  },
   created() {
     this._initImageArray();
   },
   methods: {
-    prev() {
-      if (this.currentIndex > 1) {
-        this.currentIndex--;
-      }
-    },
-    next() {
-      if (this.currentIndex < 70) {
-        this.currentIndex++;
-      }
+    carouselChange(index) {
+      this.currentIndex = index;
     },
     selectProduct(index) {
-      this.currentIndex = index + 1;
+      this.$refs.carousel.setActiveItem(index);
     },
     _initImageArray() {
       for (let i = 1; i <= 70; i++) {
@@ -95,31 +89,33 @@ export default {
         left 0
       &.el-icon-arrow-right
         right 0
-    .stage
-      display flex
+    /.stage
       margin 0 auto
       width 90%
-      .desc
-        position relative
-        flex 1
-        margin-top 40px
-        margin-left -20px
+      /.img-wrapper
+        float left
+        margin-right 50px
+        width 450px
         height 300px
-        font-size $font-size-extra-large
-        color $color-text-white
-        background $color-text-hover
-        &::before
+        &::after
           content ''
           display block
           position absolute
           top 50%
-          left -20px
+          left 480px
           margin-top -10px
           width 0
           height 0
           border-width 10px
           border-style solid
           border-color transparent $color-text-hover transparent transparent
+      .desc
+        position relative
+        height 300px
+        font-size $font-size-extra-large
+        color $color-text-white
+        background $color-text-hover
+        overflow hidden
   @media (min-width: 1820px)
     .show-content
       width 1600px
