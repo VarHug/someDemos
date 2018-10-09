@@ -1,15 +1,15 @@
 <template>
   <div class="index">
-    <div class="slider-wrapper">
+    <div class="slider-wrapper" v-show="showFlag">
       <el-carousel class="slider" arrow="never" trigger="click" :interval="5000" height="500px">
         <el-carousel-item class="slider-item"><img width="100%" src="../../common/images/slider1.jpg"></el-carousel-item>
         <el-carousel-item class="slider-item"><img width="100%" src="../../common/images/slider2.jpg"></el-carousel-item>
         <el-carousel-item class="slider-item"><img width="100%" src="../../common/images/slider3.jpg"></el-carousel-item>
       </el-carousel>
     </div>
-    <div class="content">
+    <div class="content" v-show="showFlag">
       <div class="product">
-        <div class="product-box">
+        <div class="product-box" @click="showDeatil">
           <h1 class="title">经典美式</h1>
           <div class="pic">
             <img width="100%" height="100%" src="../../common/images/pic1.jpg">
@@ -53,20 +53,29 @@
         </div>
       </div>
     </div>
+    <detail ref="detail"></detail>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import percentLine from '../percent-line/percent-line';
+import detail from '../detail/detail';
 
 export default {
   data() {
     return {
-
+      showFlag: true
     };
   },
+  methods: {
+    showDeatil() {
+      this.showFlag = false;
+      this.$refs.detail.show();
+    }
+  },
   components: {
-    percentLine
+    percentLine,
+    detail
   }
 };
 </script>
