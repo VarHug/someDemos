@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="box" style="width: 1000px; height: 1000px; position: relative; overflow: hidden;background: green;">
+    <div id="ball" style="width: 10px; height: 10px; border-radius: 5px; position: absolute;background: red;"></div>
+  </div>
+  <script>
+    // 获取DOM元素相关信息
+    var ball = document.getElementById("ball");
+    var ballWidth = ball.clientWidth;
+    var ballHeight = ball.clientHeight;
+    var box = document.getElementById("box");
+    var boxWidth = box.clientWidth;
+    var boxHeight = box.clientHeight;
+    // 初始化坐标
+    var pos = {x: 0, y: 0};
+    var minX = 0;
+    var minY = 0;
+    var maxX = boxWidth - ballWidth;
+    var maxY = boxHeight - ballHeight;
+    pos.x = random(minX, maxX);
+    pos.y = random(minY, maxY);
+    setBallPos(pos);
+    // 初始化方向
+    const LEFT = 0;
+    const TOP = 1;
+    const RIGHT = 2;
+    const BOTTOM = 3;
+    var angle = random(0, 90);
+    var deg = setDeg(angle);
+    var dir = random(0, 3);
+    // 初始化速度
+    var v = random(5, 10);
+
+    // 循环
+    var diffX = 0;
+    var diffY = 0;
+    setDiff();
+
+    var animate = setInterval(() => {
+      if ((pos.x > minX && pos.x < maxX) && (pos.y > minY && pos.y < maxY)) {
+        pos.x += diffX;
+        pos.y += diffY;
+        if (pos.x < minX) {
+          pos.x = minX;
+        } else if (pos.x > maxX) {
+          pos.x = maxX;
+        } else if (pos.y < minY) {
+          pos.y = minY;
+        } else if (pos.y > maxY) {
+          pos.y = maxY;
+        }
+        setBallPos(pos);
+      } else {
+        if (pos.x === minX) { // 左边界
+          if (dir === LEFT) {
+            dir = TOP;
+          } else if (dir === BOTTOM) {
+            dir = RIGHT;
+          }
+        } else if (pos.x === maxX) {  // 右边界
+          if (dir === TOP) {
+            dir = LEFT;
+          } else if (dir === RIGHT) {
+            dir = BOTTOM;
+          }
+        } else if (pos.y === minY) {  // 顶部
+          if (dir === LEFT) {
+            dir = BOTTOM;
+          } else if (dir === TOP) {
+            dir = RIGHT;
+          }
+        } else {  // 底部
+          if (dir === RIGHT) {
+            dir = TOP;
+          } else if (dir === BOTTOM) {
+            dir = LEFT;
+          }
+        }
+        angle = 90 - angle;
+        deg = setDeg(angle);
+        setDiff();
+        pos.x += diffX;
+        pos.y += diffY;
+        setBallPos(pos);
+      }
+    }, 60);
+
+    function random(m, n) {
+      return (m + Math.random() * (n - m + 1)) | 0
+    }
+
+    function setBallPos(pos) {
+      ball.style.left = `${pos.x}px`;
+      ball.style.top = `${pos.y}px`;
+    }
+
+    function setDeg(angle) {
+      return angle * Math.PI / 180;
+    }
+
+    function setDiff() {
+      if (dir === LEFT) {
+        diffX = -v * Math.cos(deg);
+        diffY = -v * Math.sin(deg);
+      } else if (dir === TOP) {
+        diffX = v * Math.sin(deg);
+        diffY = -v * Math.cos(deg);
+      } else if (dir === RIGHT) {
+        diffX = v * Math.cos(deg);
+        diffY = v * Math.sin(deg);
+      } else {
+        diffX = -v * Math.sin(deg);
+        diffY = v * Math.cos(deg);
+      }
+    }
+  </script>
+</body>
+</html>
