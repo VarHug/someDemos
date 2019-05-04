@@ -18,3 +18,14 @@ export const initListAction = (data) => ({
   type: actionTypes.INIT_LIST,
   data
 })
+
+export const getTodoList = () => {
+  return (dispatch) => {
+    setTimeout(() => {
+      const data = ['hello', 'world'];
+      console.log(data);
+      const action = initListAction(data);
+      dispatch(action);
+    }, 100);
+  }
+}

@@ -37,12 +37,8 @@ class AntdTodoList extends Component {
   }
 
   componentDidMount() {
-    // 模拟Ajax异步请求
-    setTimeout(() => {
-      const data = ['hello', 'world'];
-      const action = actionCreators.initListAction(data);
-      store.dispatch(action);
-    }, 100);
+    const action = actionCreators.getTodoList();
+    store.dispatch(action);
   }
 
   handleInputChange(ev) {
