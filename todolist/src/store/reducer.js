@@ -21,6 +21,10 @@ export default (state = defaultState, action) => {
     const newState = JSON.parse(JSON.stringify(state));
     newState.list.splice(action.index, 1);
     return newState;
+  } else if (action.type === actionTypes.INIT_LIST) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.list = action.data;
+    return newState;
   }
   console.log(state, action);
   return state;
