@@ -1,30 +1,27 @@
-import * as actionTypes from './actionTypes';
-
 const defaultState = {
-  inputValue: '',
+  inputValue: 'hello world',
   list: []
-};
+}
 
-// reducer可以接收state，但不能修改state
-// 纯函数，给定固定的输入，就会有固定的输出，而且不会有任何副作用
 export default (state = defaultState, action) => {
-  if (action.type === actionTypes.CHANGE_INPUT_VALUE) {
-    const newState = JSON.parse(JSON.stringify(state));
+  if (action.type === 'change_input_value') {
+    let newState = JSON.parse(JSON.stringify(state));
     newState.inputValue = action.value;
     return newState;
-  } else if (action.type === actionTypes.ADD_TODO_ITEM) {
-    const newState = JSON.parse(JSON.stringify(state));
+  }
+
+  if (action.type === 'add_todo_item') {
+    let newState = JSON.parse(JSON.stringify(state));
     newState.list.push(newState.inputValue);
     newState.inputValue = '';
     return newState;
-  } else if (action.type === actionTypes.DELETE_TODO_ITEM) {
-    const newState = JSON.parse(JSON.stringify(state));
-    newState.list.splice(action.index, 1);
-    return newState;
-  } else if (action.type === actionTypes.INIT_LIST) {
-    const newState = JSON.parse(JSON.stringify(state));
-    newState.list = action.data;
+  }
+
+  if (action.type === 'delete_todo_item') {
+    let newState = JSON.parse(JSON.stringify(state));
+    newState.list.splice(action.index);
     return newState;
   }
+
   return state;
 }
