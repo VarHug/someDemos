@@ -37,7 +37,11 @@ class AntdTodoList extends Component {
   }
 
   componentDidMount() {
-    const action = actionCreators.getTodoList();
+    // redux-thunk
+    // const action = actionCreators.getTodoList();
+    // store.dispatch(action);
+
+    const action = actionCreators.initListSaga();
     store.dispatch(action);
   }
 

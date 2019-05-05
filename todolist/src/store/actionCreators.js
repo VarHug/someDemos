@@ -19,13 +19,18 @@ export const initListAction = (data) => ({
   data
 })
 
-export const getTodoList = () => {
-  return (dispatch) => {
-    setTimeout(() => {
-      const data = ['hello', 'world'];
-      console.log(data);
-      const action = initListAction(data);
-      dispatch(action);
-    }, 100);
-  }
-}
+export const initListSaga = () => ({
+  type: actionTypes.INIT_LIST_SAGA
+})
+
+// redux-thunk
+// export const getTodoList = () => {
+//   return (dispatch) => {
+//     setTimeout(() => {
+//       const data = ['hello', 'world'];
+//       console.log(data);
+//       const action = initListAction(data);
+//       dispatch(action);
+//     }, 100);
+//   }
+// }
